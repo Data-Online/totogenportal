@@ -1,0 +1,63 @@
+{
+  "cssFiles": [],
+  "dataSources": [
+    "totogen_db"
+  ],
+  "generator": "@radzen/blazor-server",
+  "https": false,
+  "ignore": [
+    "AccountController.cs"
+  ],
+  "javaScriptFiles": [],
+  "layouts": [
+    "Login",
+    "Main"
+  ],
+  "logo": "",
+  "name": "totogen",
+  "namespaces": [],
+  "navigation": [
+    "Customer"
+  ],
+  "pages": [
+    "Application Users",
+    "Register Application User",
+    "Login",
+    "Add Application Role",
+    "Application Roles",
+    "Add Application User",
+    "Edit Application User",
+    "Profile",
+    "Unauthorized",
+    "Customer",
+    "Add Order",
+    "Add Customer",
+    "Edit Customer",
+    "Edit Order"
+  ],
+  "port": 8000,
+  "security": {
+    "autoGeneratePages": true,
+    "dataSource": "totogen_db",
+    "duration": 5,
+    "emailConfirmation": false,
+    "layout": "Main",
+    "loginLayout": "Login",
+    "loginPage": "Login",
+    "overwriteExistingPages": true,
+    "provider": "default",
+    "sessionRefresh": false,
+    "smtpFrom": "",
+    "smtpPassword": "",
+    "smtpSSL": false,
+    "smtpServer": "",
+    "smtpUser": ""
+  },
+  "serverLang": "cs",
+  "serverPort": 5000,
+  "serverProject": true,
+  "serverVersion": "5",
+  "startPage": "Customer",
+  "theme": "material-dark",
+  "title": "totogen"
+}

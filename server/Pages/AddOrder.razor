@@ -1,0 +1,125 @@
+﻿@page "/add-order/{CustomerId}"
+@layout MainLayout
+@inherits Totogen.Pages.AddOrderComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using Totogen.Models.TotogenDb
+@using Microsoft.AspNetCore.Identity;
+@using Totogen.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+<RadzenContent Container="main">
+  <ChildContent>
+    <div class="row">
+      <div class="col-md-6">
+        <div style="margin-bottom: 1rem" class="row">
+          <div class="col-md-3">
+            <RadzenLabel Component="OrderNumber" style="width: 100%" Text="Order Number">
+            </RadzenLabel>
+          </div>
+          <div class="col-md-9">
+            <RadzenTextBox MaxLength="10" style="display: block; width: 100%" @bind-Value="@(order.OrderNumber)" Name="OrderNumber">
+            </RadzenTextBox>
+            <RadzenRequiredValidator Component="OrderNumber" style="position: absolute" Text="OrderNumber is required">
+            </RadzenRequiredValidator>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div style="margin-bottom: 1rem" class="row">
+          <div class="col-md-4">
+            <RadzenLabel Component="TermsSent" style="width: 100%" Text="Terms Sent">
+            </RadzenLabel>
+          </div>
+          <div class="col-md-3">
+            <RadzenCheckBox TriState="false" @bind-Value="@(order.TermsSent)" Name="TermsSent">
+            </RadzenCheckBox>
+          </div>
+          <div class="col-md-3">
+            <RadzenButton Icon="mail" Size="ButtonSize.Small" text="Send">
+            </RadzenButton>
+          </div>
+        </div>
+        <div style="margin-bottom: 1rem" class="row">
+          <div class="col-md-4">
+            <RadzenLabel Component="InstructionsSent" style="width: 100%" Text="Instructions Sent">
+            </RadzenLabel>
+          </div>
+          <div class="col-md-3">
+            <RadzenCheckBox TriState="false" @bind-Value="@(order.InstructionsSent)" Name="InstructionsSent">
+            </RadzenCheckBox>
+          </div>
+          <div class="col-md-3">
+            <RadzenButton Icon="mail" Size="ButtonSize.Small" text="Send">
+            </RadzenButton>
+          </div>
+        </div>
+      </div>
+    </div>
+    <RadzenHeading Size="H3" style="text-align: center" Text="Samples">
+    </RadzenHeading>
+    <div class="row">
+      <div class="col-md-6">
+        <div style="margin-bottom: 1rem" class="row">
+          <div class="col-md-3">
+            <RadzenLabel Component="SamplesExpected" style="width: 100%" Text="Date Expected">
+            </RadzenLabel>
+          </div>
+          <div class="col-md-9">
+            <RadzenDatePicker DateFormat="dd/MM/yyyy" @bind-Value="@(order.SampleExpectedDate)" Name="Datepicker0">
+            </RadzenDatePicker>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div style="margin-bottom: 1rem" class="row">
+          <div class="col-md-3">
+            <RadzenLabel Component="SamplesExpected" style="width: 100%" Text="Number Expected">
+            </RadzenLabel>
+          </div>
+          <div class="col-md-9">
+            <RadzenNumeric style="width: 100%" @bind-Value="@(order.SamplesExpected)" Name="Numeric0">
+            </RadzenNumeric>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <RadzenTemplateForm Data="@order" TItem="Totogen.Models.TotogenDb.Order" Visible="@(order != null)" Submit="@Form0Submit">
+          <ChildContent>
+            <div style="margin-bottom: 1rem" class="row">
+              <div class="col-md-3">
+                <RadzenLabel Component="FeeArrangement" style="width: 100%" Text="Fee Arrangement">
+                </RadzenLabel>
+              </div>
+              <div class="col-md-9">
+                <RadzenDropDownDataGrid Data="@getFeeArrangementsForFeeArrangementResult" Placeholder="Choose FeeArrangement" ShowSearch="false" style="width: 100%" TextProperty="FeeArrangement1" @bind-Value="@(order.FeeArrangement)" ValueProperty="FeeArrangementId" Name="FeeArrangement">
+                </RadzenDropDownDataGrid>
+              </div>
+            </div>
+            <div style="margin-bottom: 1rem" class="row">
+              <div class="col-md-3">
+                <RadzenLabel Component="FeeStatus" style="width: 100%" Text="Fee Status">
+                </RadzenLabel>
+              </div>
+              <div class="col-md-9">
+                <RadzenDropDownDataGrid Data="@getFeeStatusesForFeeStatusResult" Placeholder="Choose FeeStatus" ShowSearch="false" style="width: 100%" TextProperty="FeeStatus1" @bind-Value="@(order.FeeStatus)" ValueProperty="FeeStatusId" Name="FeeStatus">
+                </RadzenDropDownDataGrid>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col offset-sm-3">
+                <RadzenButton ButtonStyle="ButtonStyle.Primary" ButtonType="ButtonType.Submit" Icon="save" Text="Save">
+                </RadzenButton>
+                <RadzenButton ButtonStyle="ButtonStyle.Light" style="margin-left: 1rem" Text="Cancel" Click="@Button4Click">
+                </RadzenButton>
+              </div>
+            </div>
+          </ChildContent>
+        </RadzenTemplateForm>
+      </div>
+    </div>
+  </ChildContent>
+</RadzenContent>

@@ -1,0 +1,123 @@
+﻿@page "/"
+@page "/customer"
+@layout MainLayout
+@inherits Totogen.Pages.CustomerComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using Totogen.Models.TotogenDb
+@using Microsoft.AspNetCore.Identity;
+@using Totogen.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+<RadzenContent Container="main">
+  <ChildContent>
+    <RadzenHeading Size="H1" Text="Customers">
+    </RadzenHeading>
+    <div class="row">
+      <div class="col-md-12">
+        <RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px" Text="Add" Click="@Button0Click">
+        </RadzenButton>
+        <RadzenSplitButton Icon="get_app" style="margin-bottom: 10px; margin-left: 10px" Text="Export" Click="@Splitbutton0Click">
+          <ChildContent>
+            <RadzenSplitButtonItem Text="Excel" Value="xlsx">
+            </RadzenSplitButtonItem>
+            <RadzenSplitButtonItem Text="CSV" Value="csv">
+            </RadzenSplitButtonItem>
+          </ChildContent>
+        </RadzenSplitButton>
+        <RadzenTextBox Placeholder="Search ..." style="display: block; margin-bottom: 10px; width: 100%" Name="Textbox0" @oninput="@(async(args) => {search = $"{args.Value}";await grid0.GoToPage(0);await Load();})">
+        </RadzenTextBox>
+        <RadzenDataGrid @ref="grid0" AllowFiltering="true" AllowPaging="true" AllowSorting="true" Data="@getCustomersResult" ExpandMode="DataGridExpandMode.Single" FilterMode="Radzen.FilterMode.Advanced" TItem="Totogen.Models.TotogenDb.Customer" RowExpand="@Grid0RowExpand" RowSelect="@Grid0RowSelect">
+          <Columns>
+            <RadzenDataGridColumn TItem="Totogen.Models.TotogenDb.Customer" Property="CustomerName" Title="Customer Name">
+              <Template Context="data">
+              <RadzenLink class="totogenHeading" path="@($"customer-details/{data.CustomerId}")" Target="_self" Text="@(data.CustomerName)" @onclick:stopPropagation="true">
+              </RadzenLink>
+              <div class="row">
+              	<div class="col-md-6 totogenTableDetail">
+                  		<span class="totogenTableDetail">@data.Address1</span><br />
+              		<span>@data.Address2 &nbsp @data.Address2</span>
+              	</div>
+              </div>
+              </Template>
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="Totogen.Models.TotogenDb.Customer" Property="TotalOrders" Title="Total Orders">
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="Totogen.Models.TotogenDb.Customer" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="70px">
+              <Template Context="totogenModelsTotogenDbCustomer">
+                <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="close" Size="ButtonSize.Small" Click="@((args) =>GridDeleteButtonClick(args, totogenModelsTotogenDbCustomer))" @onclick:stopPropagation="true">
+                </RadzenButton>
+              </Template>
+            </RadzenDataGridColumn>
+          </Columns>
+          <Template Context="totogenModelsTotogenDbCustomer">
+            <RadzenHeading Size="H1" Text="Orders">
+            </RadzenHeading>
+            <RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px" Text="Add" Click="@((args) =>OrderAddButtonClick(args, totogenModelsTotogenDbCustomer))">
+            </RadzenButton>
+            <RadzenDataGrid @ref="grid1" AllowFiltering="true" AllowPaging="true" AllowSorting="true" Data="@(totogenModelsTotogenDbCustomer.Orders)" FilterMode="Radzen.FilterMode.Advanced" TItem="Totogen.Models.TotogenDb.Order" RowSelect="@((args) =>Grid1RowSelect(args, totogenModelsTotogenDbCustomer))">
+              <Columns>
+                <RadzenDataGridColumn TItem="Totogen.Models.TotogenDb.Order" Property="OrderNumber" Title="Order Number">
+                  <Template Context="data">
+                  <p class="totogenHeading">@(data.OrderNumber)</p>
+                  </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="Totogen.Models.TotogenDb.Order" FormatString="{0:d}" Property="SampleExpectedDate" Title="Date Expected">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="Totogen.Models.TotogenDb.Order" Property="TermsSent" Title="Terms Sent">
+                  <Template Context="data">
+                  @if (data.TermsSent == true)
+                                          {
+                                      <RadzenIcon Icon="done" IconStyle="IconStyle.Success">
+                                      </RadzenIcon>
+                  }
+                                  else
+                                  {
+                                      <RadzenIcon Icon="clear" IconStyle="IconStyle.Warning">
+                                      </RadzenIcon>
+                                      }
+                  </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="Totogen.Models.TotogenDb.Order" Property="InstructionsSent" Title="Instructions Sent">
+                  <Template Context="data">
+                  @if (data.InstructionsSent == true)
+                                          {
+                                      <RadzenIcon Icon="done" IconStyle="IconStyle.Success">
+                                      </RadzenIcon>
+                  }
+                                  else
+                                  {
+                                      <RadzenIcon Icon="clear" IconStyle="IconStyle.Warning">
+                                      </RadzenIcon>
+                                      }
+                  </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="Totogen.Models.TotogenDb.Order" FilterProperty="FeeArrangement1.FeeArrangement1" GroupProperty="FeeArrangement1.FeeArrangement1" Property="FeeArrangement" SortProperty="FeeArrangement1.FeeArrangement1" Title="Fee Arrangement">
+                  <Template Context="data">
+                  @(data.FeeArrangement1?.FeeArrangement1)
+                  </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="Totogen.Models.TotogenDb.Order" FilterProperty="FeeStatus1.FeeStatus1" GroupProperty="FeeStatus1.FeeStatus1" Property="FeeStatus" SortProperty="FeeStatus1.FeeStatus1" Title="Fee Status">
+                  <Template Context="data">
+                  @(data.FeeStatus1?.FeeStatus1)
+                  </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="Totogen.Models.TotogenDb.Order" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="70px">
+                  <Template Context="totogenModelsTotogenDbOrder">
+                    <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="close" Size="ButtonSize.Small" Click="@((args) =>OrderDeleteButtonClick(args, totogenModelsTotogenDbOrder))" @onclick:stopPropagation="true">
+                    </RadzenButton>
+                  </Template>
+                </RadzenDataGridColumn>
+              </Columns>
+            </RadzenDataGrid>
+            <RadzenIcon>
+            </RadzenIcon>
+            <RadzenIcon>
+            </RadzenIcon>
+          </Template>
+        </RadzenDataGrid>
+      </div>
+    </div>
+  </ChildContent>
+</RadzenContent>

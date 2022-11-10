@@ -1,0 +1,533 @@
+{
+  "access": "Authenticated",
+  "components": [
+    {
+      "components": [
+        {
+          "components": [
+            {
+              "class": "col-md-12",
+              "components": [
+                {
+                  "components": [
+                    {
+                      "components": [
+                        {
+                          "class": "col-md-6",
+                          "components": [
+                            {
+                              "components": [
+                                {
+                                  "class": "col-md-3",
+                                  "components": [
+                                    {
+                                      "component": "OrderNumber",
+                                      "name": "OrderNumberLabel",
+                                      "style": {
+                                        "width": "100%"
+                                      },
+                                      "text": "Order Number",
+                                      "type": "label"
+                                    }
+                                  ],
+                                  "name": "col2",
+                                  "type": "col"
+                                },
+                                {
+                                  "class": "col-md-9",
+                                  "components": [
+                                    {
+                                      "maxLength": 10,
+                                      "name": "OrderNumber",
+                                      "style": {
+                                        "display": "block",
+                                        "width": "100%"
+                                      },
+                                      "type": "textbox",
+                                      "value": "${order.OrderNumber}",
+                                      "valueType": "string"
+                                    },
+                                    {
+                                      "component": "OrderNumber",
+                                      "name": "OrderNumberRequiredValidator",
+                                      "style": {
+                                        "position": "absolute"
+                                      },
+                                      "text": "OrderNumber is required",
+                                      "type": "required-validator"
+                                    }
+                                  ],
+                                  "name": "col3",
+                                  "type": "col"
+                                }
+                              ],
+                              "name": "row1",
+                              "style": {
+                                "marginBottom": "1rem"
+                              },
+                              "type": "row"
+                            }
+                          ],
+                          "name": "col0",
+                          "type": "col"
+                        },
+                        {
+                          "class": "col-md-6",
+                          "components": [
+                            {
+                              "components": [
+                                {
+                                  "class": "col-md-5",
+                                  "components": [
+                                    {
+                                      "component": "TermsSent",
+                                      "name": "TermsSentLabel",
+                                      "style": {
+                                        "width": "100%"
+                                      },
+                                      "text": "Terms Sent?",
+                                      "type": "label"
+                                    }
+                                  ],
+                                  "name": "col10",
+                                  "type": "col"
+                                },
+                                {
+                                  "class": "col-md-3",
+                                  "components": [
+                                    {
+                                      "name": "TermsSent",
+                                      "triState": false,
+                                      "type": "checkbox",
+                                      "value": "${order.TermsSent}",
+                                      "valueType": "bool?"
+                                    }
+                                  ],
+                                  "name": "col11",
+                                  "type": "col"
+                                },
+                                {
+                                  "class": "col-md-3",
+                                  "components": [
+                                    {
+                                      "attributes": [
+                                        {
+                                          "name": "text",
+                                          "value": "Send"
+                                        }
+                                      ],
+                                      "icon": "mail",
+                                      "name": "button0",
+                                      "size": "ButtonSize.Small",
+                                      "text": "",
+                                      "type": "button"
+                                    }
+                                  ],
+                                  "name": "col14",
+                                  "type": "col"
+                                }
+                              ],
+                              "name": "row5",
+                              "style": {
+                                "marginBottom": "1rem"
+                              },
+                              "type": "row"
+                            },
+                            {
+                              "components": [
+                                {
+                                  "class": "col-md-5",
+                                  "components": [
+                                    {
+                                      "component": "InstructionsSent",
+                                      "name": "InstructionsSentLabel",
+                                      "style": {
+                                        "width": "100%"
+                                      },
+                                      "text": "Instructions Sent?",
+                                      "type": "label"
+                                    }
+                                  ],
+                                  "name": "col12",
+                                  "type": "col"
+                                },
+                                {
+                                  "class": "col-md-3",
+                                  "components": [
+                                    {
+                                      "name": "InstructionsSent",
+                                      "triState": false,
+                                      "type": "checkbox",
+                                      "value": "${order.InstructionsSent}",
+                                      "valueType": "bool?"
+                                    }
+                                  ],
+                                  "name": "col13",
+                                  "type": "col"
+                                },
+                                {
+                                  "class": "col-md-3",
+                                  "components": [
+                                    {
+                                      "attributes": [
+                                        {
+                                          "name": "text",
+                                          "value": "Send"
+                                        }
+                                      ],
+                                      "icon": "mail",
+                                      "name": "button1",
+                                      "size": "ButtonSize.Small",
+                                      "text": "",
+                                      "type": "button"
+                                    }
+                                  ],
+                                  "name": "col15",
+                                  "type": "col"
+                                }
+                              ],
+                              "name": "row6",
+                              "style": {
+                                "marginBottom": "1rem"
+                              },
+                              "type": "row"
+                            }
+                          ],
+                          "name": "col1",
+                          "type": "col"
+                        }
+                      ],
+                      "name": "row0",
+                      "type": "row"
+                    },
+                    {
+                      "name": "heading0",
+                      "size": "H3",
+                      "style": {
+                        "textAlign": "center"
+                      },
+                      "text": "Samples",
+                      "type": "heading"
+                    },
+                    {
+                      "components": [
+                        {
+                          "class": "col-md-6",
+                          "components": [
+                            {
+                              "components": [
+                                {
+                                  "class": "col-md-3",
+                                  "components": [
+                                    {
+                                      "component": "Date0",
+                                      "name": "label0",
+                                      "style": {
+                                        "width": "100%"
+                                      },
+                                      "text": "Date Expected",
+                                      "type": "label"
+                                    }
+                                  ],
+                                  "name": "col8",
+                                  "type": "col"
+                                },
+                                {
+                                  "class": "col-md-9",
+                                  "components": [
+                                    {
+                                      "allowClear": true,
+                                      "dateFormat": "dd/MM/yyyy",
+                                      "name": "datepicker0",
+                                      "type": "datepicker",
+                                      "value": "${order.SampleExpectedDate}"
+                                    }
+                                  ],
+                                  "name": "col9",
+                                  "type": "col"
+                                }
+                              ],
+                              "name": "row4",
+                              "style": {
+                                "marginBottom": "1rem"
+                              },
+                              "type": "row"
+                            }
+                          ],
+                          "name": "col6",
+                          "type": "col"
+                        },
+                        {
+                          "class": "col-md-6",
+                          "components": [
+                            {
+                              "components": [
+                                {
+                                  "class": "col-md-3",
+                                  "components": [
+                                    {
+                                      "component": "SamplesExpected",
+                                      "name": "SamplesExpectedLabel",
+                                      "style": {
+                                        "width": "100%"
+                                      },
+                                      "text": "Number Expected",
+                                      "type": "label"
+                                    }
+                                  ],
+                                  "name": "col4",
+                                  "type": "col"
+                                },
+                                {
+                                  "class": "col-md-9",
+                                  "components": [
+                                    {
+                                      "name": "SamplesExpected",
+                                      "style": {
+                                        "width": "100%"
+                                      },
+                                      "type": "numeric",
+                                      "value": "${order.SamplesExpected}",
+                                      "valueType": "int?"
+                                    }
+                                  ],
+                                  "name": "col5",
+                                  "type": "col"
+                                }
+                              ],
+                              "name": "row2",
+                              "style": {
+                                "marginBottom": "1rem"
+                              },
+                              "type": "row"
+                            }
+                          ],
+                          "name": "col7",
+                          "type": "col"
+                        }
+                      ],
+                      "name": "row3",
+                      "type": "row"
+                    },
+                    {
+                      "components": [
+                        {
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "component": "FeeArrangement",
+                              "name": "FeeArrangementLabel",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "text": "Fee Arrangement",
+                              "type": "label"
+                            }
+                          ],
+                          "type": "col"
+                        },
+                        {
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "data": "${getFeeArrangementsForFeeArrangementResult}",
+                              "name": "FeeArrangement",
+                              "placeholder": "Choose FeeArrangement",
+                              "showSearch": false,
+                              "style": {
+                                "width": "100%"
+                              },
+                              "textProperty": "FeeArrangement1",
+                              "type": "dropdown-datagrid",
+                              "value": "${order.FeeArrangement}",
+                              "valueProperty": "FeeArrangementId",
+                              "valueType": "int?"
+                            }
+                          ],
+                          "type": "col"
+                        }
+                      ],
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "type": "row"
+                    },
+                    {
+                      "components": [
+                        {
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "component": "FeeStatus",
+                              "name": "FeeStatusLabel",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "text": "Fee Status",
+                              "type": "label"
+                            }
+                          ],
+                          "type": "col"
+                        },
+                        {
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "data": "${getFeeStatusesForFeeStatusResult}",
+                              "name": "FeeStatus",
+                              "placeholder": "Choose FeeStatus",
+                              "showSearch": false,
+                              "style": {
+                                "width": "100%"
+                              },
+                              "textProperty": "FeeStatus1",
+                              "type": "dropdown-datagrid",
+                              "value": "${order.FeeStatus}",
+                              "valueProperty": "FeeStatusId",
+                              "valueType": "int?"
+                            }
+                          ],
+                          "type": "col"
+                        }
+                      ],
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "type": "row"
+                    },
+                    {
+                      "components": [
+                        {
+                          "class": "col offset-sm-3",
+                          "components": [
+                            {
+                              "buttonStyle": "primary",
+                              "buttonType": "submit",
+                              "icon": "save",
+                              "text": "Save",
+                              "type": "button"
+                            },
+                            {
+                              "buttonStyle": "light",
+                              "events": {
+                                "click": [
+                                  {
+                                    "type": "close-popup"
+                                  }
+                                ]
+                              },
+                              "style": {
+                                "marginLeft": "1rem"
+                              },
+                              "text": "Cancel",
+                              "type": "button"
+                            }
+                          ],
+                          "type": "col"
+                        }
+                      ],
+                      "type": "row"
+                    }
+                  ],
+                  "data": "${order}",
+                  "events": {
+                    "submit": [
+                      {
+                        "error": [
+                          {
+                            "detail": "Unable to update Order",
+                            "severity": "error",
+                            "summary": "Error",
+                            "type": "notify"
+                          }
+                        ],
+                        "name": "totogen_db.updateOrder",
+                        "parameters": [
+                          {
+                            "name": "OrderId",
+                            "value": "${parameters.OrderId}"
+                          },
+                          {
+                            "name": "Order",
+                            "value": "${order}"
+                          }
+                        ],
+                        "then": [
+                          {
+                            "condition": "",
+                            "result": "${order}",
+                            "type": "close-popup"
+                          }
+                        ],
+                        "type": "invoke"
+                      }
+                    ]
+                  },
+                  "itemType": "Totogen.Models.TotogenDb.Order",
+                  "name": "form0",
+                  "type": "template-form",
+                  "visible": "${order != null}"
+                }
+              ],
+              "type": "col"
+            }
+          ],
+          "type": "row"
+        }
+      ],
+      "container": "main",
+      "type": "content"
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "error": [],
+        "name": "totogen_db.getOrderByOrderId",
+        "parameters": [
+          {
+            "name": "OrderId",
+            "value": "${parameters.OrderId}"
+          }
+        ],
+        "then": [
+          {
+            "name": "order",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "Totogen.Models.TotogenDb.Order"
+          }
+        ],
+        "type": "invoke"
+      },
+      {
+        "name": "totogen_db.getFeeArrangements",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getFeeArrangementsForFeeArrangementResult",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "IEnumerable<Totogen.Models.TotogenDb.FeeArrangement>"
+          }
+        ],
+        "type": "invoke"
+      },
+      {
+        "name": "totogen_db.getFeeStatuses",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getFeeStatusesForFeeStatusResult",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "IEnumerable<Totogen.Models.TotogenDb.FeeStatus>"
+          }
+        ],
+        "type": "invoke"
+      }
+    ]
+  },
+  "layout": "Main",
+  "name": "Edit Order"
+}

@@ -1,0 +1,899 @@
+{
+  "info": {
+    "title": "totogen_db",
+    "x-type": "odata",
+    "x-connector": "mssql",
+    "x-connector-version": 15,
+    "x-infer-aspnet": false,
+    "x-infer-tables": true,
+    "x-infer-relations": true,
+    "x-infer-views": true,
+    "x-infer-sps": true
+  },
+  "definitions": {
+    "Customer": {
+      "x-table": "dbo.Customers",
+      "resource": "Customers",
+      "required": [],
+      "properties": {
+        "CustomerId": {
+          "x-key": true,
+          "x-identity": true,
+          "x-nullable": false,
+          "x-precision": 10,
+          "type": "integer",
+          "x-navigation": [
+            {
+              "inversePropertyName": "Customer",
+              "name": "Orders",
+              "type": "Order"
+            }
+          ]
+        },
+        "CustomerName": {
+          "type": "string",
+          "length": 100
+        },
+        "Address1": {
+          "type": "string",
+          "length": 50
+        },
+        "Address2": {
+          "type": "string",
+          "length": 50
+        },
+        "Address3": {
+          "type": "string",
+          "length": 50
+        },
+        "Pcode": {
+          "type": "string",
+          "length": 8
+        },
+        "TotalOrders": {
+          "x-computed": true,
+          "x-precision": 10,
+          "type": "integer"
+        },
+        "Orders": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Order"
+          }
+        }
+      }
+    },
+    "FeeArrangement": {
+      "x-table": "dbo.FeeArrangements",
+      "resource": "FeeArrangements",
+      "required": [],
+      "properties": {
+        "FeeArrangementId": {
+          "x-key": true,
+          "x-identity": true,
+          "x-nullable": false,
+          "x-precision": 10,
+          "type": "integer",
+          "x-navigation": [
+            {
+              "inversePropertyName": "FeeArrangement1",
+              "name": "Orders",
+              "type": "Order"
+            }
+          ]
+        },
+        "FeeArrangement1": {
+          "x-original-name": "FeeArrangement",
+          "type": "string",
+          "length": 50
+        },
+        "Orders": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Order"
+          }
+        }
+      }
+    },
+    "FeeStatus": {
+      "x-table": "dbo.FeeStatus",
+      "resource": "FeeStatuses",
+      "required": [],
+      "properties": {
+        "FeeStatusId": {
+          "x-key": true,
+          "x-identity": true,
+          "x-nullable": false,
+          "x-precision": 10,
+          "type": "integer",
+          "x-navigation": [
+            {
+              "inversePropertyName": "FeeStatus1",
+              "name": "Orders",
+              "type": "Order"
+            }
+          ]
+        },
+        "FeeStatus1": {
+          "x-original-name": "FeeStatus",
+          "type": "string",
+          "length": 20
+        },
+        "Orders": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Order"
+          }
+        }
+      }
+    },
+    "Order": {
+      "x-table": "dbo.Orders",
+      "resource": "Orders",
+      "required": [
+        "OrderNumber",
+        "CustomerId"
+      ],
+      "properties": {
+        "OrderId": {
+          "x-key": true,
+          "x-identity": true,
+          "x-nullable": false,
+          "x-precision": 10,
+          "type": "integer"
+        },
+        "OrderNumber": {
+          "x-nullable": false,
+          "type": "string",
+          "length": 10
+        },
+        "SamplesExpected": {
+          "x-precision": 10,
+          "type": "integer"
+        },
+        "TermsSent": {
+          "type": "boolean"
+        },
+        "InstructionsSent": {
+          "type": "boolean"
+        },
+        "FeeArrangement1": {
+          "type": "object",
+          "$ref": "#/definitions/FeeArrangement"
+        },
+        "FeeArrangement": {
+          "x-precision": 10,
+          "type": "integer",
+          "x-foreignKey": {
+            "parentTable": "FeeArrangements",
+            "parentEntityType": "FeeArrangement",
+            "type": "FeeArrangement",
+            "principalKey": "FeeArrangementId",
+            "name": "FeeArrangement1",
+            "textProperty": "FeeArrangement1",
+            "navigationProperty": "Orders"
+          }
+        },
+        "Customer": {
+          "type": "object",
+          "$ref": "#/definitions/Customer"
+        },
+        "CustomerId": {
+          "x-nullable": false,
+          "x-precision": 10,
+          "type": "integer",
+          "x-foreignKey": {
+            "parentTable": "Customers",
+            "parentEntityType": "Customer",
+            "type": "Customer",
+            "principalKey": "CustomerId",
+            "name": "Customer",
+            "textProperty": "CustomerName",
+            "navigationProperty": "Orders"
+          }
+        },
+        "FeeStatus1": {
+          "type": "object",
+          "$ref": "#/definitions/FeeStatus"
+        },
+        "FeeStatus": {
+          "x-precision": 10,
+          "type": "integer",
+          "x-foreignKey": {
+            "parentTable": "FeeStatus",
+            "parentEntityType": "FeeStatus",
+            "type": "FeeStatus",
+            "principalKey": "FeeStatusId",
+            "name": "FeeStatus1",
+            "textProperty": "FeeStatus1",
+            "navigationProperty": "Orders"
+          }
+        },
+        "SampleExpectedDate": {
+          "type": "string",
+          "format": "date-time",
+          "x-datetime": "date"
+        }
+      }
+    }
+  },
+  "paths": {
+    "/Customers": {
+      "get": {
+        "operationId": "getCustomers",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$filter",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$orderby",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$expand",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$top",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$skip",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$format",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "properties": {
+                "value": {
+                  "items": {
+                    "$ref": "#/definitions/Customer"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createCustomer",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "Customer",
+            "schema": {
+              "$ref": "#/definitions/Customer"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/Customer"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/FeeArrangements": {
+      "get": {
+        "operationId": "getFeeArrangements",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$filter",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$orderby",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$expand",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$top",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$skip",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$format",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "properties": {
+                "value": {
+                  "items": {
+                    "$ref": "#/definitions/FeeArrangement"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createFeeArrangement",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "FeeArrangement",
+            "schema": {
+              "$ref": "#/definitions/FeeArrangement"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/FeeArrangement"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/FeeStatuses": {
+      "get": {
+        "operationId": "getFeeStatuses",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$filter",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$orderby",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$expand",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$top",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$skip",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$format",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "properties": {
+                "value": {
+                  "items": {
+                    "$ref": "#/definitions/FeeStatus"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createFeeStatus",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "FeeStatus",
+            "schema": {
+              "$ref": "#/definitions/FeeStatus"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/FeeStatus"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/Orders": {
+      "get": {
+        "operationId": "getOrders",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$filter",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$orderby",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$expand",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$top",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$skip",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$format",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "properties": {
+                "value": {
+                  "items": {
+                    "$ref": "#/definitions/Order"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createOrder",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "Order",
+            "schema": {
+              "$ref": "#/definitions/Order"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/Order"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/Customers({CustomerId})": {
+      "delete": {
+        "operationId": "deleteCustomer",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "CustomerId",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "getCustomerByCustomerId",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "CustomerId",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Customer"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateCustomer",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "CustomerId",
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "Customer",
+            "schema": {
+              "$ref": "#/definitions/Customer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "cancel": {
+        "operationId": "cancelCustomerChanges",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "Customer",
+            "schema": {
+              "$ref": "#/definitions/Customer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/FeeArrangements({FeeArrangementId})": {
+      "delete": {
+        "operationId": "deleteFeeArrangement",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "FeeArrangementId",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "getFeeArrangementByFeeArrangementId",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "FeeArrangementId",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/FeeArrangement"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateFeeArrangement",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "FeeArrangementId",
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "FeeArrangement",
+            "schema": {
+              "$ref": "#/definitions/FeeArrangement"
+            }
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "cancel": {
+        "operationId": "cancelFeeArrangementChanges",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "FeeArrangement",
+            "schema": {
+              "$ref": "#/definitions/FeeArrangement"
+            }
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/FeeStatuses({FeeStatusId})": {
+      "delete": {
+        "operationId": "deleteFeeStatus",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "FeeStatusId",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "getFeeStatusByFeeStatusId",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "FeeStatusId",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/FeeStatus"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateFeeStatus",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "FeeStatusId",
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "FeeStatus",
+            "schema": {
+              "$ref": "#/definitions/FeeStatus"
+            }
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "cancel": {
+        "operationId": "cancelFeeStatusChanges",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "FeeStatus",
+            "schema": {
+              "$ref": "#/definitions/FeeStatus"
+            }
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/Orders({OrderId})": {
+      "delete": {
+        "operationId": "deleteOrder",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "OrderId",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "getOrderByOrderId",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "OrderId",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Order"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateOrder",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "OrderId",
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "Order",
+            "schema": {
+              "$ref": "#/definitions/Order"
+            }
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "cancel": {
+        "operationId": "cancelOrderChanges",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "Order",
+            "schema": {
+              "$ref": "#/definitions/Order"
+            }
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    }
+  },
+  "basePath": "/odata/TotogenDb",
+  "host": "localhost:5000",
+  "schemes": [
+    "http"
+  ]
+}
